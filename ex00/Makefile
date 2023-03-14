@@ -6,11 +6,12 @@
 #    By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 13:10:43 by amrakibe          #+#    #+#              #
-#    Updated: 2023/03/14 13:22:14 by amrakibe         ###   ########.fr        #
+#    Updated: 2023/03/14 19:24:04 by amrakibe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = btc
+
 CC = c++
 FLAG = -Wall -Wextra -Werror -std=c++98
 RM = rm -fr
