@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/14 19:01:00 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/14 20:43:18 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ class BitcoinExchange
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &bit_obj);
 		BitcoinExchange&operator=(const BitcoinExchange &bit_obj);
+		void test(char **av);
 		~BitcoinExchange();
-		std::vector<std::string> split(std::string line, char delimiter);
+		std::vector<std::string> ft_split(std::string Length, char delimiter);
 };
 
