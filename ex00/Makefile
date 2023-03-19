@@ -6,14 +6,14 @@
 #    By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 13:10:43 by amrakibe          #+#    #+#              #
-#    Updated: 2023/03/14 19:24:04 by amrakibe         ###   ########.fr        #
+#    Updated: 2023/03/19 14:08:07 by amrakibe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = btc
 
 CC = c++
-FLAG = -Wall -Wextra -Werror -std=c++98
+FLAG = -Wall -Wextra -Werror -std=c++98 -g
 RM = rm -fr
 src = main.cpp BitcoinExchange.cpp 
 
