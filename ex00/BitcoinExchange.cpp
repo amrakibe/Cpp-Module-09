@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/19 22:23:53 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/19 22:28:57 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void BitcoinExchange::test(char **av)
 			}
 			sp.front() = trim(sp.front());
 			sp.back() = trim(sp.back());
-			double value = static_cast<double>(atof(sp.back().c_str()));
+			double value = static_cast<double>(std::atof(sp.back().c_str()));
 			if (value < 0 || value > 1000)
 			{
 				std::cerr << (value > 1000 ? "Error: number is large " : "Error: not a positive number.") << std::endl;
@@ -205,3 +205,6 @@ std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimi
 			list.push_back(sub_string);
 	return list;
 }
+
+
+// !! we need to parse the first line  is a data and value or something else
