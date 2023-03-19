@@ -6,86 +6,102 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/19 16:56:16 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/19 21:19:18 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange()
-{
-	// std::cout << "BitcoinExchange Default constructor called" << std::endl;
-	this->date = "";
-	this->value = 0;
+
+BitcoinExchange::BitcoinExchange(std::string nameFile)
+{	
+		std::ifstream inp_file(nameFile);
+		std::string out;
+		std::string buff2;
+		std::string buff1;
+
+		if (!inp_file.is_open())
+			std::cerr << "Error : could not open file." << std::endl;
+		else
+		{
+			std::getline(inp_file, out);
+			while (std::getline(inp_file, out))
+			{
+				std::stringstream str(out);
+				std::getline(str, buff1, ',');
+				std::getline(str, buff2,',');
+				// !! insert  key (data) and value to map
+				_data[buff1] = std::stod(buff2.c_str());
+				//  !! sjs
+				// _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
+				
+			}
+		}
+		// std::map<std::string, double>::iterator it = _data.begin();
+		// while (it != _data.end())
+		// {
+		// 	std::cout << "key: "  << it->first << " value: " << it->second << std::endl;
+		// 	it++;
+		// }
 }
 
-BitcoinExchange::BitcoinExchange(float value, std::string date)
-{
-	// std::cout << "BitcoinExchange constructor " << std::endl;
-	this->value = value;
-	this->date = date;
-}
-
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj)
-{
-	// std::cout << "BitcoinExchange Copy constructor called" << std::endl;
-	*this = obj;
-}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj){*this = obj;}
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 {
-	// std::cout << "BitcoinExchange Copy assignment operator called" << std::endl;
-	this->date = obj.date;
-	this->value = obj.value;
+	if (this != &obj)
+	{
+		this->date = obj.date;
+		this->value = obj.value;
+	}
 	return (*this);
 }
-BitcoinExchange::~BitcoinExchange()
+BitcoinExchange::~BitcoinExchange(){}
+
+
+void ParseDate(int y, int m, int d)
 {
-	// std::cout << "BitcoinExchange Destructor called" << std::endl;
-}
+	bool leaps = false;
 
-void ParseDate(std::string date, int i)
-{
-	// (void)date;
-	//  years
-	if(i == 0)
+	if (y % 4 != 0)
+		leaps = true;
+	switch (m)
 	{
-		// if((int)std::atof(date) % 4 != 0) 
-			std::cout << "hhh: " << i << " " <<"< "<< date << " > " <<std::endl;
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		if (d > 31)
+			std::cout << "Error: \n";
+		break;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		if (d > 30)
+			std::cout << "Error: \n";
+		break;
+	case 2:
+		if (leaps)
+		{
+			if (d > 28)
+				std::cout << "Error: \n";
+		}
+		else
+		{
+			if (d > 29)
+				std::cout << "Error: \n";
+		}
 	}
-
-	//  mounth
-
-	if (i == 1)
-	{
-		std::cout << "hhh: " << i << " " <<"< "<< date << " >" <<std::endl;
-	}
-
-	// day
-	if (i == 2)
-	{
-		std::cout << "hhh: " << i << " " <<"< "<< date << " >" <<std::endl;
-		// std::cout << "hhh" << i << std::endl;
-	}
-	// std::cout << date<< std::endl;
-	// for (size_t i = 0; i < date.size(); i++)
-	// {
-	// 	if (date[i] != 3)
-	// 	{
-	// 		std::cerr << "Error: bad input " << date[i] << std::endl;
-	// 	}
-	// 	if (!isdigit(date[i]))
-	// 	{
-	// 		std::cerr << "The input was not a valid integer: " << date[i] << std::endl;
-	// 		return;
-	// 	}
-	// }
-	// std::cout << "this is front: " << date.front() << std::endl;
 }
 
 void BitcoinExchange::test(char **av)
 {
 	BitcoinExchange ex;
+	
 	std::string name = av[1];
 	std::ifstream inp_file(name);
 	std::string out;
@@ -124,13 +140,28 @@ void BitcoinExchange::test(char **av)
 			}
 			std::list<std::string> a = ex.ft_split(sp.front(), '-');
 			if (a.size() != 3)
-					std::cout << "error:" << std::endl;
+				std::cout << "error:" << std::endl;
 			std::list<std::string>::iterator it = a.begin();
-			int i = 0;
-			for (; it != a.end(); it++)
+
+			int y = (int)std::atof((*it).c_str());
+			int m = (int)std::atof((*++it).c_str());
+			int d = (int)std::atof((*++it).c_str());
+			ParseDate(y, m, d);
+			if (_data.find(sp.front()) != _data.end())
 			{
-				ParseDate(*it, i++);
-				// std::cout << "it : " << *it << std::endl;
+				std::cout << "data : " << _data[sp.front()] * value << std::endl;
+			}
+			else
+			{
+				std::map<std::string , double>::iterator it = _data.lower_bound(sp.front());
+				if (it == _data.begin())
+				{
+					std::cout <<"Error \n";
+					continue; ;
+				}
+					
+				it--;
+				std::cout << "data : " << it->second * value << std::endl;
 			}
 		}
 	}
@@ -160,3 +191,4 @@ std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimi
 			list.push_back(sub_string);
 	return list;
 }
+
