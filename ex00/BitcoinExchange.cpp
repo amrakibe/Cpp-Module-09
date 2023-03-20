@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/19 22:28:57 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:10:11 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			// !! insert  key (data) and value to map
 			_data[buff1] = std::stod(buff2.c_str());
 			//  !! insert  key (data) and value to map
-			// _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
+			// ? _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
 		}
 	}
-	// std::map<std::string, double>::iterator it = _data.begin();
-	// while (it != _data.end())
-	// {
-	// 	std::cout << "key: "  << it->first << " value: " << it->second << std::endl;
-	// 	it++;
-	// }
+	// ? std::map<std::string, double>::iterator it = _data.begin();
+	// ? while (it != _data.end())
+	// ? {
+	// ? 	std::cout << "key: "  << it->first << " value: " << it->second << std::endl;
+	// ? 	it++;
+	// ? }
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj) { *this = obj; }
@@ -102,11 +102,7 @@ void BitcoinExchange::test(char **av)
 	std::string name = av[1];
 	std::ifstream inp_file(name);
 	std::string out;
-	if (!inp_file.is_open())
-	{
-		std::cerr << "Error : could not open file." << std::endl;
-	}
-	else
+	if (inp_file.is_open())
 	{
 		while (std::getline(inp_file, out))
 		{
@@ -119,6 +115,8 @@ void BitcoinExchange::test(char **av)
 			}
 			sp.front() = trim(sp.front());
 			sp.back() = trim(sp.back());
+			if(!std::isdigit(sp.front()[0]))
+				continue;
 			double value = static_cast<double>(std::atof(sp.back().c_str()));
 			if (value < 0 || value > 1000)
 			{
@@ -145,7 +143,7 @@ void BitcoinExchange::test(char **av)
 			ParseDate(y, m, d);
 			if (_data.find(sp.front()) != _data.end())
 			{
-				std::cout << sp.front() << " => " << _data[sp.front()] * value << std::endl;
+				std::cout  << sp.front() << " => "<< sp.back() << " = " << _data[sp.front()] * value << std::endl;
 			}
 			else
 			{
@@ -156,30 +154,13 @@ void BitcoinExchange::test(char **av)
 					continue;
 				}
 				it--;
-				std::cout  << sp.front() << " => " << it->second * value << std::endl;
+				std::cout  << sp.front() << " => "<< sp.back() << " = " << it->second * value << std::endl;
 			}
 		}
 	}
+	else
+		std::cerr << "Error : could not open file." << std::endl;
 }
-
-// void BitcoinExchange::func()
-// {
-// 	if (_data.find(sp.front()) != _data.end())
-// 	{
-// 		std::cout << "data : " << _data[sp.front()] * value << std::endl;
-// 	}
-// 	else
-// 	{
-// 		std::map<std::string, double>::iterator it = _data.lower_bound(sp.front());
-// 		if (it == _data.begin())
-// 		{
-// 			std::cerr << "Error : " << std::endl;
-// 			return;
-// 		}
-// 		it--;
-// 		std::cout << "data : " << it->second * value << std::endl;
-// 	}
-// }
 
 std::string BitcoinExchange::trim(std::string t)
 {
@@ -207,4 +188,4 @@ std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimi
 }
 
 
-// !! we need to parse the first line  is a data and value or something else
+// !! we need to parse the first line,  is a data and value or something else
