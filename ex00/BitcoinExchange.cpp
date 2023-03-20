@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/20 10:10:11 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:56:25 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,25 @@ void ParseDate(int y, int m, int d)
 		case 10:
 		case 12:
 			if (d > 31)
-				std::cerr << "Error: \n";
+				std::cerr << "Error[31]: \n";
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
 			if (d > 30)
-				std::cerr << "Error: \n";
+				std::cerr << "Error[30]: \n";
 			break;
 		case 2:
 			if (leaps)
 			{
 				if (d > 28)
-					std::cerr << "Error: \n";
+					std::cerr << "Error[28]: \n";	
 			}
 			else
 			{
 				if (d > 29)
-					std::cerr << "Error: \n";
+					std::cerr << "Error[29]: \n";
 			}
 	}
 }
@@ -104,38 +104,40 @@ void BitcoinExchange::test(char **av)
 	std::string out;
 	if (inp_file.is_open())
 	{
+		std::getline(inp_file, out);
 		while (std::getline(inp_file, out))
 		{
 			std::list<std::string> sp = ex.ft_split(out, '|');
 
+			sp.front() = trim(sp.front());
+			sp.back() = trim(sp.back());
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
 				continue;
 			}
-			sp.front() = trim(sp.front());
-			sp.back() = trim(sp.back());
-			if(!std::isdigit(sp.front()[0]))
-				continue;
 			double value = static_cast<double>(std::atof(sp.back().c_str()));
 			if (value < 0 || value > 1000)
 			{
-				std::cerr << (value > 1000 ? "Error: number is large " : "Error: not a positive number.") << std::endl;
+				std::cerr << (value > 1000 ? "Error: too large a number. " : "Error: not a positive number.") << std::endl;
 				continue;
 			}
-			for (size_t i = 0; i < sp.back().size(); i++)
-			{
-				if (sp.back()[i] == '.')
-					i++;
-				if (!isdigit(sp.back()[i]))
+			// for (size_t i = 0; i < sp.back().size(); i++)
+			// {
+				// if (sp.back()[i] == '.')
+				// 	i++;
+				if (!isdigit(sp.back()[0]))
 				{
 					std::cerr << "The input was not a valid integer: " << sp.back() << std::endl;
-					return;
+					continue;
 				}
-			}
+			// }
 			std::list<std::string> a = ex.ft_split(sp.front(), '-');
 			if (a.size() != 3)
-				std::cerr << "error : " << std::endl;
+			{
+				std::cerr << "error 2: " << std::endl;
+				continue;
+			}
 			std::list<std::string>::iterator it = a.begin();
 			int y = (int)std::atof((*it).c_str());
 			int m = (int)std::atof((*++it).c_str());
@@ -150,7 +152,7 @@ void BitcoinExchange::test(char **av)
 				std::map<std::string, double>::iterator it = _data.lower_bound(sp.front());
 				if (it == _data.begin())
 				{
-					std::cerr << "Error : " << std::endl;
+					std::cerr << "Error 1: " << std::endl;
 					continue;
 				}
 				it--;
@@ -186,6 +188,3 @@ std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimi
 			list.push_back(sub_string);
 	return list;
 }
-
-
-// !! we need to parse the first line,  is a data and value or something else
