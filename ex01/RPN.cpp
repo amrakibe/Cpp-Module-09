@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/21 15:06:04 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:31:01 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,26 @@ void	ParseRpnPolishedNotation(std::string Reverse_Polish)
 				str += line;
 		}
     }
+	int lentOp = 0, lentNb = 0;
 	for (size_t i = 0; i < str.size(); i++)
 	{
 		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
+		{
+			lentOp++;
 			continue;
+		}
 		if (!isdigit(str[i]))
 		{
 			std::cerr << "Error" << std::endl;
 			exit(1);
 		}
-		
+		else
+			lentNb++;
+	}
+	if (lentOp != lentNb - 1)
+	{
+		std::cerr << "Error" << std::endl;
+		exit(1);
 	}
   	RPNpolishedNotation(str);
 }
