@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 00:31:45 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:20:06 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,51 +32,114 @@ std::vector<int> merge(std::vector<int> left_vector, std::vector<int> right_vect
 {
     std::vector<int> result;
 
-    double left_index = 0;
-    double right_index = 0;
+    double i = 0;
+    double j = 0;
 
-    for (; left_index < left_vector.size() && right_index < right_vector.size();)
+    for (; i < left_vector.size() && j < right_vector.size();)
     {
-        if (left_vector[left_index] < right_vector[right_index])
+        if (left_vector[i] < right_vector[j])
         {
-            result.push_back(left_vector[left_index]);
-            left_index++;
+            result.push_back(left_vector[i]);
+            i++;
         }
         else
         {
-            result.push_back(right_vector[right_index]);
-            right_index++;
+            result.push_back(right_vector[j]);
+            j++;
         }
     }
-
-    for (;left_index < left_vector.size(); left_index++)
+    for (;i < left_vector.size(); i++)
     {
-        result.push_back(left_vector[left_index]);
+        result.push_back(left_vector[i]);
     }
-
-    for (;right_index < right_vector.size() ; right_index++)
+    for (;j < right_vector.size() ; j++)
     {
-        result.push_back(right_vector[right_index]);
+        result.push_back(right_vector[j]);
     }
-    return result;
+    return (result);
 }
 
-template <typename T>
-void swap(T &f, T &s)
+void myswap(int f, int s)
 {
-	T tmp = f;
+	int tmp = f;
 	f = s;
 	s = tmp;
 }
 
-void insert_sort(std::vector<int> &vector)
+void insert_sort(std::vector<int> &vec)
 {
-    for (size_t i = 0; i < vector.size(); ++i)
+    for (size_t i = 0; i < vec.size(); ++i)
     {
         int j = i;
-        while (j > 0 && vector[j] < vector[j - 1])
+        while (j > 0 && vec[j] < vec[j - 1])
         {
-            swap(vector[j], vector[j - 1]);
+            myswap(vec[j], vec[j - 1]);
+            j--;
+        }
+    }
+}
+
+// !! ************************************************************************** !! \\
+// !! ************************ Path: deque ************************************* !! \\
+// !! ************************************************************************** !! \\
+
+
+std::deque<int> merge(std::deque<int> left_deque, std::deque<int> right_deque)
+{
+    std::deque<int> result;
+
+    double i = 0;
+    double j = 0;
+
+    for (; i < left_deque.size() && j < right_deque.size();)
+    {
+        if (left_deque[i] < right_deque[j])
+        {
+            result.push_back(left_deque[i]);
+            i++;
+        }
+        else
+        {
+            result.push_back(right_deque[j]);
+            j++;
+        }
+    }
+    i = 0,j = 0;
+    for (;i < left_deque.size(); i++)
+    {
+        result.push_back(left_deque[i]);
+    }
+    for (;j < right_deque.size() ; j++)
+    {
+        result.push_back(right_deque[j]);
+    }
+    return (result);
+}
+
+std::deque<int> merge_sort(std::deque<int> deque)
+{
+    if (deque.size() <= 1)
+    {
+        return deque;
+    }
+    int resize = deque.size() / 2;
+    std::deque<int> left_deque(deque.begin(), deque.begin() + resize);
+    std::deque<int> right_deque(deque.begin() + resize, deque.end());
+
+    left_deque = merge_sort(left_deque);
+    right_deque = merge_sort(right_deque);
+
+    return merge(left_deque, right_deque);
+}
+
+void insert_sort(std::deque<int> &deq)
+{
+    for (size_t i = 1; i < deq.size(); i++)
+    {
+        int j = i;
+        while (j > 0 && deq[j] < deq[j - 1])
+        {
+            myswap(deq[j], deq[j - 1]);
             j--;
         }
     }
