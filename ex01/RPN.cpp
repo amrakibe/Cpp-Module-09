@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/21 15:31:01 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/24 21:03:17 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 RPN::~RPN(){}
 
-RPN::RPN(){this->Reverse_Polish = "";}
+RPN::RPN()
+{
+	this->Reverse_Polish = "";
+}
 
-RPN::RPN(const RPN &obj){*this = obj;}
+RPN::RPN(const RPN &obj)
+{
+	*this = obj;
+}
 
 RPN &RPN::operator=(const RPN &obj)
 {
