@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 19:54:27 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/24 20:52:52 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			// ? _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
 		}
 	}
-	// ? std::map<std::string, double>::iterator it = _data.begin();
-	// ? while (it != _data.end())
-	// ? {
-	// ? 	std::cout << "key: "  << it->first << " value: " << it->second << std::endl;
-	// ? 	it++;
-	// ? }
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj) { *this = obj; }
@@ -64,44 +58,44 @@ bool ParseDate(int y, int m, int d)
 		leaps = true;
 	switch (m)
 	{
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			if (d > 31)
+	case 1:
+	case 3:
+	case 5:
+	case 7:
+	case 8:
+	case 10:
+	case 12:
+		if (d > 31)
+		{
+			std::cerr << "Error[31]: \n";
+			return false;
+		}
+		break;
+	case 4:
+	case 6:
+	case 9:
+	case 11:
+		if (d > 30)
+		{
+			std::cerr << "Error[30]: \n";
+			return false;
+		}
+		break;
+	case 2:
+		if (leaps)
+		{
+			if (d > 28)
 			{
-				std::cerr << "Error[31]: \n";
-				return false;
-			}
-			break;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			if (d > 30)
-			{
-				std::cerr << "Error[30]: \n";
-				return false;	
-			}
-			break;
-		case 2:
-			if (leaps)
-			{
-				if (d > 28)
-				{
-					std::cerr << "Error[28]: \n";
-					return (false);
-				}
-			}
-			else
-			{
-				if (d > 29)
-					std::cerr << "Error[29]: \n";
+				std::cerr << "Error[28]: \n";
 				return (false);
 			}
+		}
+		else
+		{
+			if (d > 29)
+				std::cerr << "Error[29]: \n";
+			return (false);
+		}
 	}
 	return true;
 }
@@ -118,7 +112,7 @@ void BitcoinExchange::test(char **av)
 		std::getline(inp_file, out);
 		while (std::getline(inp_file, out))
 		{
-			if(out.find("|") != out.rfind("|"))
+			if (out.find("|") != out.rfind("|"))
 			{
 				std::cerr << "Error: bad input => " << out << std::endl;
 				continue;
@@ -126,9 +120,8 @@ void BitcoinExchange::test(char **av)
 			std::list<std::string> sp = ex.ft_split(out, '|');
 
 			sp.front() = trim(sp.front());
-			std::string str = sp.back();
 			sp.back() = trim(sp.back());
-
+			std::string str = sp.back();
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
@@ -137,20 +130,28 @@ void BitcoinExchange::test(char **av)
 			double value = static_cast<double>(std::atof(sp.back().c_str()));
 			if (value < 0 || value > 1000)
 			{
-				std::cerr << (value > 1000 ? "Error: too large a number. " : "Error: not a positive number.") << std::endl;
+				std::cerr << (value > 1000 ? "Error: too large a number " : "Error: not a positive number") << std::endl;
 				continue;
 			}
-			if(str.find(".") != str.rfind("."))
+			if (str.find(".") != str.rfind("."))
 			{
-				std::cerr << "error: not a valid number." << std::endl;
+				std::cerr << "error: not a valid number" << std::endl;
 				continue;
 			}
-			if (!isdigit(sp.back()[0]))
+			bool isNumber = true;
+			for (size_t i = 0; i < sp.back().size(); i++)
 			{
-				std::cerr << "The input was not a valid integer: " << sp.back() << std::endl;
+				if(sp.back()[i] == '.')
+					continue;
+				if (!isdigit(sp.back()[i]))
+					isNumber = false;
+			}
+			if (!isNumber)
+			{
+				std::cerr << "Error: Not a Valid Number " << sp.back()<< std::endl;
 				continue;
 			}
-			if(sp.front().size() > 10 || sp.front().size() < 10)
+			if (sp.front().size() > 10 || sp.front().size() < 10)
 			{
 				std::cerr << "error 10: " << std::endl;
 				continue;
@@ -165,13 +166,13 @@ void BitcoinExchange::test(char **av)
 			int y = (int)std::atof((*it).c_str());
 			int m = (int)std::atof((*++it).c_str());
 			int d = (int)std::atof((*++it).c_str());
-			if(!ParseDate(y, m, d))
+			if (!ParseDate(y, m, d))
 			{
 				continue;
 			}
 			if (_data.find(sp.front()) != _data.end())
 			{
-				std::cout  << sp.front() << " => "<< sp.back() << " = " << _data[sp.front()] * value << std::endl;
+				std::cout << sp.front() << " => " << sp.back() << " = " << _data[sp.front()] * value << std::endl;
 			}
 			else
 			{
@@ -181,12 +182,12 @@ void BitcoinExchange::test(char **av)
 					continue;
 				}
 				it--;
-				std::cout  << sp.front() << " => "<< sp.back() << " = " << it->second * value << std::endl;
+				std::cout << sp.front() << " => " << sp.back() << " = " << it->second * value << std::endl;
 			}
 		}
 	}
 	else
-		std::cerr << "Error : could not open file." << std::endl;
+		std::cerr << "Error : could not open file" << std::endl;
 }
 
 std::string BitcoinExchange::trim(std::string t)
