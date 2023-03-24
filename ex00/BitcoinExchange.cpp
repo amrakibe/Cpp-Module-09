@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/23 20:47:50 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/24 19:54:27 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 }
 BitcoinExchange::~BitcoinExchange() {}
 
-void ParseDate(int y, int m, int d)
+bool ParseDate(int y, int m, int d)
 {
 	bool leaps = false;
 
-	if (y % 4 != 0)
+	if (y % 4 == 0)
 		leaps = true;
 	switch (m)
 	{
@@ -72,27 +72,38 @@ void ParseDate(int y, int m, int d)
 		case 10:
 		case 12:
 			if (d > 31)
+			{
 				std::cerr << "Error[31]: \n";
+				return false;
+			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
 			if (d > 30)
+			{
 				std::cerr << "Error[30]: \n";
+				return false;	
+			}
 			break;
 		case 2:
 			if (leaps)
 			{
 				if (d > 28)
-					std::cerr << "Error[28]: \n";	
+				{
+					std::cerr << "Error[28]: \n";
+					return (false);
+				}
 			}
 			else
 			{
 				if (d > 29)
 					std::cerr << "Error[29]: \n";
+				return (false);
 			}
 	}
+	return true;
 }
 
 void BitcoinExchange::test(char **av)
@@ -107,10 +118,17 @@ void BitcoinExchange::test(char **av)
 		std::getline(inp_file, out);
 		while (std::getline(inp_file, out))
 		{
+			if(out.find("|") != out.rfind("|"))
+			{
+				std::cerr << "Error: bad input => " << out << std::endl;
+				continue;
+			}
 			std::list<std::string> sp = ex.ft_split(out, '|');
 
 			sp.front() = trim(sp.front());
+			std::string str = sp.back();
 			sp.back() = trim(sp.back());
+
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
@@ -122,16 +140,21 @@ void BitcoinExchange::test(char **av)
 				std::cerr << (value > 1000 ? "Error: too large a number. " : "Error: not a positive number.") << std::endl;
 				continue;
 			}
-			// for (size_t i = 0; i < sp.back().size(); i++)
-			// {
-				// if (sp.back()[i] == '.')
-				// 	i++;
-				if (!isdigit(sp.back()[0]))
-				{
-					std::cerr << "The input was not a valid integer: " << sp.back() << std::endl;
-					continue;
-				}
-			// }
+			if(str.find(".") != str.rfind("."))
+			{
+				std::cerr << "error: not a valid number." << std::endl;
+				continue;
+			}
+			if (!isdigit(sp.back()[0]))
+			{
+				std::cerr << "The input was not a valid integer: " << sp.back() << std::endl;
+				continue;
+			}
+			if(sp.front().size() > 10 || sp.front().size() < 10)
+			{
+				std::cerr << "error 10: " << std::endl;
+				continue;
+			}
 			std::list<std::string> a = ex.ft_split(sp.front(), '-');
 			if (a.size() != 3)
 			{
@@ -142,7 +165,10 @@ void BitcoinExchange::test(char **av)
 			int y = (int)std::atof((*it).c_str());
 			int m = (int)std::atof((*++it).c_str());
 			int d = (int)std::atof((*++it).c_str());
-			ParseDate(y, m, d);
+			if(!ParseDate(y, m, d))
+			{
+				continue;
+			}
 			if (_data.find(sp.front()) != _data.end())
 			{
 				std::cout  << sp.front() << " => "<< sp.back() << " = " << _data[sp.front()] * value << std::endl;
@@ -152,7 +178,6 @@ void BitcoinExchange::test(char **av)
 				std::map<std::string, double>::iterator it = _data.lower_bound(sp.front());
 				if (it == _data.begin())
 				{
-					std::cerr << "Error 1: " << std::endl;
 					continue;
 				}
 				it--;
