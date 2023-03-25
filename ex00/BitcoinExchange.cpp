@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 20:52:52 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:36:53 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff1, ',');
 			std::getline(str, buff2, ',');
 			// !! insert  key (data) and value to map
-			_data[buff1] = std::stod(buff2.c_str());
+			_data[buff1] = std::stod(buff2);
 			//  !! insert  key (data) and value to map
 			// ? _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
 		}
@@ -67,7 +67,7 @@ bool ParseDate(int y, int m, int d)
 	case 12:
 		if (d > 31)
 		{
-			std::cerr << "Error[31]: \n";
+			std::cerr << "Error: not a valid date " << std::endl;
 			return false;
 		}
 		break;
@@ -77,7 +77,7 @@ bool ParseDate(int y, int m, int d)
 	case 11:
 		if (d > 30)
 		{
-			std::cerr << "Error[30]: \n";
+			std::cerr << "Error not a valid date: " << std::endl;
 			return false;
 		}
 		break;
@@ -86,14 +86,14 @@ bool ParseDate(int y, int m, int d)
 		{
 			if (d > 28)
 			{
-				std::cerr << "Error[28]: \n";
+				std::cerr << "Error: not a valid date" << std::endl;
 				return (false);
 			}
 		}
 		else
 		{
 			if (d > 29)
-				std::cerr << "Error[29]: \n";
+				std::cerr << "Error: not a valid date" << std::endl;
 			return (false);
 		}
 	}
@@ -127,7 +127,7 @@ void BitcoinExchange::test(char **av)
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
 				continue;
 			}
-			double value = static_cast<double>(std::atof(sp.back().c_str()));
+			double value = (double)std::atof(sp.back().c_str());
 			if (value < 0 || value > 1000)
 			{
 				std::cerr << (value > 1000 ? "Error: too large a number " : "Error: not a positive number") << std::endl;
@@ -135,7 +135,7 @@ void BitcoinExchange::test(char **av)
 			}
 			if (str.find(".") != str.rfind("."))
 			{
-				std::cerr << "error: not a valid number" << std::endl;
+				std::cerr << "Error: not a valid number => " << str << std::endl;
 				continue;
 			}
 			bool isNumber = true;
@@ -148,20 +148,21 @@ void BitcoinExchange::test(char **av)
 			}
 			if (!isNumber)
 			{
-				std::cerr << "Error: Not a Valid Number " << sp.back()<< std::endl;
+				std::cerr << "Error: Not a Valid Number => " << sp.back()<< std::endl;
 				continue;
 			}
 			if (sp.front().size() > 10 || sp.front().size() < 10)
 			{
-				std::cerr << "error 10: " << std::endl;
+				std::cerr << "Error not a valid date => " << sp.front() << std::endl;
 				continue;
 			}
 			std::list<std::string> a = ex.ft_split(sp.front(), '-');
 			if (a.size() != 3)
 			{
-				std::cerr << "error 2: " << std::endl;
+				std::cerr << "Error: not a valid date => " << a.front() <<std::endl;
 				continue;
 			}
+			
 			std::list<std::string>::iterator it = a.begin();
 			int y = (int)std::atof((*it).c_str());
 			int m = (int)std::atof((*++it).c_str());

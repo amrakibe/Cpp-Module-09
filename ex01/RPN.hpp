@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:42 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/21 15:06:58 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/24 22:27:39 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@ class	RPN
 };
 void	RPNpolishedNotation(std::string Reverse_Polish);
 void	ParseRpnPolishedNotation(std::string Reverse_Polish);
+void t(std::string str);

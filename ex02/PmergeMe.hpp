@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:03 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 12:13:44 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:43:58 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <time.h>
 
 
 std::vector<int> merge(std::vector<int> left_arr, std::vector<int> right_arr);
