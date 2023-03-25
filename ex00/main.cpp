@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:35 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/19 21:46:09 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:40:48 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int main(int ac, char **av)
 		return (0);
 	}
 	else
-		ex.test(av);
+		ex.ParseBitcoin(av);
 	return (0);
 }

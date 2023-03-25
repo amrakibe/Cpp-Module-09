@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 16:36:53 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:43:41 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff2, ',');
 			// !! insert  key (data) and value to map
 			_data[buff1] = std::stod(buff2);
-			//  !! insert  key (data) and value to map
-			// ? _data.insert(make_pair(buff1, std::stod(buff2.c_str())));
 		}
 	}
 }
@@ -68,7 +66,7 @@ bool ParseDate(int y, int m, int d)
 		if (d > 31)
 		{
 			std::cerr << "Error: not a valid date " << std::endl;
-			return false;
+			return (false);
 		}
 		break;
 	case 4:
@@ -78,7 +76,7 @@ bool ParseDate(int y, int m, int d)
 		if (d > 30)
 		{
 			std::cerr << "Error not a valid date: " << std::endl;
-			return false;
+			return (false);
 		}
 		break;
 	case 2:
@@ -97,10 +95,10 @@ bool ParseDate(int y, int m, int d)
 			return (false);
 		}
 	}
-	return true;
+	return (true);
 }
 
-void BitcoinExchange::test(char **av)
+void BitcoinExchange::ParseBitcoin(char **av)
 {
 	BitcoinExchange ex;
 
