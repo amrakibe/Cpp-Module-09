@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 01:28:12 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 17:22:21 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ std::vector<int> merge_sort(std::vector<int> vector)
     double cpu_time_used;
     cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
     
-    printf("CPU time used: %f seconds\n", cpu_time_used);
+    // printf("\nCPU time used: %f seconds\n", cpu_time_used);
     if (vector.size() <= 1)
     {
         return vector;
@@ -30,7 +30,8 @@ std::vector<int> merge_sort(std::vector<int> vector)
 
     left_vector = merge_sort(left_vector);
     right_vector = merge_sort(right_vector);
-
+    end_time = clock();
+    std::cout << "hhhhh: " << end_time << std::endl;
     return merge(left_vector, right_vector);
 }
 

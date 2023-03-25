@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 16:43:41 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 22:29:11 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff1, ',');
 			std::getline(str, buff2, ',');
 			// !! insert  key (data) and value to map
-			_data[buff1] = std::stod(buff2);
+			// !! stod is a forbidden function : use atof
+			_data[buff1] = std::atof(buff2.c_str());
 		}
 	}
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj) { *this = obj; }
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj)
+{
+	*this = obj;
+}
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 {
@@ -46,7 +50,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 	}
 	return (*this);
 }
-BitcoinExchange::~BitcoinExchange() {}
+
+BitcoinExchange::~BitcoinExchange(){
+}
 
 bool ParseDate(int y, int m, int d)
 {
@@ -133,7 +139,7 @@ void BitcoinExchange::ParseBitcoin(char **av)
 			}
 			if (str.find(".") != str.rfind("."))
 			{
-				std::cerr << "Error: not a valid number => " << str << std::endl;
+				std::cerr << "Error: not a valid number" << std::endl;
 				continue;
 			}
 			bool isNumber = true;
@@ -144,14 +150,29 @@ void BitcoinExchange::ParseBitcoin(char **av)
 				if (!isdigit(sp.back()[i]))
 					isNumber = false;
 			}
-			if (!isNumber)
-			{
-				std::cerr << "Error: Not a Valid Number => " << sp.back()<< std::endl;
-				continue;
-			}
 			if (sp.front().size() > 10 || sp.front().size() < 10)
 			{
 				std::cerr << "Error not a valid date => " << sp.front() << std::endl;
+				continue;
+			}
+			if(sp.front()[4] != '-' || sp.front()[7] != '-')
+			{
+				std::cerr << "Error: not a valid date => " << sp.front() << std::endl;
+				continue;
+			}
+			for (size_t i = 0; i < sp.front().size(); i++)
+			{
+				if(i == 4 || i == 7)
+					continue;
+				if(!std::isdigit(sp.front()[i]))
+				{
+					isNumber = false;
+					continue;
+				}
+			}
+			if (!isNumber)
+			{
+				std::cerr << "Error: not a valid Number" << std::endl;
 				continue;
 			}
 			std::list<std::string> a = ex.ft_split(sp.front(), '-');
@@ -160,7 +181,7 @@ void BitcoinExchange::ParseBitcoin(char **av)
 				std::cerr << "Error: not a valid date => " << a.front() <<std::endl;
 				continue;
 			}
-			
+			// !!
 			std::list<std::string>::iterator it = a.begin();
 			int y = (int)std::atof((*it).c_str());
 			int m = (int)std::atof((*++it).c_str());

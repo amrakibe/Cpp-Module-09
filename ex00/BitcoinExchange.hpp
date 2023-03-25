@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 16:40:23 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/25 20:33:08 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ class BitcoinExchange
 		~BitcoinExchange();
 		std::list<std::string> ft_split(std::string length, char delimiter);
 };
-std::string ft_it(std::string length, char delimiter);
-void ParseDate(std::string date, int i);
+// void ParseDate(std::string date, int i);
