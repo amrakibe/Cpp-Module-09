@@ -6,12 +6,11 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 13:44:45 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 19:57:28 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
-
 
 void ParseRpnPolishedNotation(std::string Reverse_Polish)
 {
@@ -33,7 +32,11 @@ void ParseRpnPolishedNotation(std::string Reverse_Polish)
 				exit(1);
 			}
 			else
+			{
 				str += line;
+				std::cout <<"this is str: "<< str << std::endl;
+				puts("\nhhh");
+			}
 		}
 	}
 	checkVNumber(str);

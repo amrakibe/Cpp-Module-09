@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 16:52:50 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 20:01:09 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ std::vector<int> merge_sort(std::vector<int> vector)
 {
     int resize;
 
-    if (vector.size() <= 1)
+    if (vector.size() <= 10)
     {
-        return vector;
+        return insert_sort(vector);
     }
     resize = vector.size() / 2;
     std::vector<int> left_vector(vector.begin(), vector.begin() + resize);
@@ -123,9 +123,9 @@ std::deque<int> merge(std::deque<int> left_deque, std::deque<int> right_deque)
 
 std::deque<int> merge_sort(std::deque<int> deque)
 {
-    if (deque.size() <= 1)
+    if (deque.size() <= 10)
     {
-        return deque;
+        return insert_sort(deque);
     }
     int resize = deque.size() / 2;
     std::deque<int> left_deque(deque.begin(), deque.begin() + resize);
