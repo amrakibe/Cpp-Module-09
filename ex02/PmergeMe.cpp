@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 15:44:46 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:47:22 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,25 @@
 // !! merge_sort  vector
 std::vector<int> merge_sort(std::vector<int> vector)
 {
-    clock_t start_time, end_time = 0;
-    start_time = clock();
-    double cpu_time_used,resize;
-    cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
+    int resize;
+
     if (vector.size() <= 1)
     {
+        // insert_sort(vector);
         return vector;
     }
+    // clock_t start_time, end_time = 0;
+    // start_time = clock();
+    // double cpu_time_used;
+    // cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
     resize = vector.size() / 2;
     std::vector<int> left_vector(vector.begin(), vector.begin() + resize);
     std::vector<int> right_vector(vector.begin() + resize, vector.end());
 
     left_vector = merge_sort(left_vector);
     right_vector = merge_sort(right_vector);
-    end_time = clock();
-    std::cout << "endtime " << end_time << std::endl;
+    // end_time = clock();
+    // std::cout << "endtime " << end_time << std::endl;
     return merge(left_vector, right_vector);
 }
 
@@ -137,7 +140,7 @@ std::deque<int> merge_sort(std::deque<int> deque)
 // !! insert_sort deque
 std::deque<int> insert_sort(std::deque<int> &deq)
 {
-    for (size_t i = 1; i < deq.size(); i++)
+    for (size_t i = 0; i < deq.size(); i++)
     {
         int j = i;
         while (j > 0 && deq[j] < deq[j - 1])
