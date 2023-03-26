@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:42 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 22:27:39 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 13:39:19 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 #include <stack>
 #include <sstream>
 
-class	RPN
-{
-	private:
-		std::string Reverse_Polish;
-	public:
-		RPN();
-		RPN& operator=(const RPN& obj);
-		RPN(const RPN& obj);
-		RPN(std::string Reverse_Polish);
-		~RPN();
-};
 void	RPNpolishedNotation(std::string Reverse_Polish);
 void	ParseRpnPolishedNotation(std::string Reverse_Polish);
-void t(std::string str);
+void	checkVNumber(std::string str);
