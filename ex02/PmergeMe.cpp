@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 21:39:14 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 22:17:41 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,17 @@ std::deque<int> insert_sort(std::deque<int> &deq)
     return(deq);
 }
 
-// !! ************************************************************************** !! //
-// !! ************************ the end ***************************************** !! //
-// !! ************************************************************************** !! //
+// !! ********************************************************************************************************** !! //
+
+// ? This line of code is calculating the amount of time it takes to execute a piece of code in microseconds (µs).
+
+// ? Here's how the calculation works:
+
+// ? CLOCKS_PER_SEC is a constant that represents the number of clock ticks per second.
+// ? cl is a clock value that was obtained before and after the code to be timed was executed.
+// ? (double)cl casts the cl variable to a double data type so that the result of the division will also be a double.
+// ? The division ((double)cl) / CLOCKS_PER_SEC calculates the time in seconds that it took to execute the code.
+// ? The result of the division is then multiplied by 1000000 to convert the time to microseconds.
+// ? So the variable vec_time will hold the amount of time it took to execute the code in microseconds.
+
+// !! *************************************************************************************************** !! //
