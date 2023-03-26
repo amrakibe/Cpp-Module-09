@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 21:19:28 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:39:14 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ std::vector<int> merge_sort(std::vector<int> vector)
 {
     int resize;
 
-    if (vector.size() <= 10)
+    if (vector.size() <= 10
+    )
     {
         return insert_sort(vector);
     }

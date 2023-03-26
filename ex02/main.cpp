@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:38:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 21:26:54 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:34:55 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int main(int ac, char **av)
 {
     clock_t cl;
     std::vector<int> sequence;
-
     std::deque<int> deq;
 
-    
     if (ac <= 1)
 	{
         std::cout << "error" << std::endl;
@@ -42,34 +40,24 @@ int main(int ac, char **av)
         deq.push_back(std::atof(av[i]));
     }
 
-
-
-    
     std::cout << "Before: " ;
     for (size_t i = 1; av[i]; i++)
     {
         std::cout << av[i] << " ";
     }
+    
     // !! this is merge sort
     cl = clock();
     std::vector<int> sorted_sequence = merge_sort(sequence);
     cl = clock() - cl;
-    double vec_time = ((double)cl) / CLOCKS_PER_SEC;
+    double vec_time = ((double)cl) / CLOCKS_PER_SEC * 1000000;
 
-    // !! this is deque sort
+    // !! this time for deque
     cl = clock();
     merge_sort(deq);
     cl = clock() - cl;
-    double deq_time = ((double)cl) / CLOCKS_PER_SEC;
-    
-       
+    double deq_time = ((double)cl) / CLOCKS_PER_SEC * 1000000;
 
-
-     
-   
-    // !! this is insertion sort
-    // std::vector<int> sorted_sequence = insert_sort(sequence);
-    // mergeInsertionSort(sorted_sequence);
     std::cout << std::endl <<"After: ";
     for (size_t i = 0; i < sorted_sequence.size(); i++)
     {
