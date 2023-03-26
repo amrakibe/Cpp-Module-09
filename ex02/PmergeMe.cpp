@@ -6,38 +6,34 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:09:00 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 16:47:22 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:52:50 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-// !! merge_sort  vector
+// ?? merge_sort:  vector
+
 std::vector<int> merge_sort(std::vector<int> vector)
 {
     int resize;
 
     if (vector.size() <= 1)
     {
-        // insert_sort(vector);
         return vector;
     }
-    // clock_t start_time, end_time = 0;
-    // start_time = clock();
-    // double cpu_time_used;
-    // cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
     resize = vector.size() / 2;
     std::vector<int> left_vector(vector.begin(), vector.begin() + resize);
     std::vector<int> right_vector(vector.begin() + resize, vector.end());
 
     left_vector = merge_sort(left_vector);
     right_vector = merge_sort(right_vector);
-    // end_time = clock();
-    // std::cout << "endtime " << end_time << std::endl;
+
     return merge(left_vector, right_vector);
 }
 
-// !! merge vector
+// ?? merge: vector
+
 std::vector<int> merge(std::vector<int> left_vector, std::vector<int> right_vector)
 {
     std::vector<int> result;
@@ -68,7 +64,9 @@ std::vector<int> merge(std::vector<int> left_vector, std::vector<int> right_vect
     }
     return (result);
 }
-// !! insertion sort vector
+
+// ?? insertion sort: vector
+
 std::vector<int> insert_sort(std::vector<int> &vec)
 {
     for (size_t i = 0; i < vec.size(); ++i)
@@ -87,8 +85,8 @@ std::vector<int> insert_sort(std::vector<int> &vec)
 // !! ************************ Path: deque ************************************* !! //
 // !! ************************************************************************** !! //
 
+// ?? merge: deque
 
-// !! merge deque
 std::deque<int> merge(std::deque<int> left_deque, std::deque<int> right_deque)
 {
     std::deque<int> result;
@@ -120,7 +118,9 @@ std::deque<int> merge(std::deque<int> left_deque, std::deque<int> right_deque)
     }
     return (result);
 }
-// !! merge_sort deque
+
+// ?? merge_sort: deque
+
 std::deque<int> merge_sort(std::deque<int> deque)
 {
     if (deque.size() <= 1)
@@ -137,7 +137,8 @@ std::deque<int> merge_sort(std::deque<int> deque)
     return merge(left_deque, right_deque);
 }
 
-// !! insert_sort deque
+// ?? insert_sort: deque
+
 std::deque<int> insert_sort(std::deque<int> &deq)
 {
     for (size_t i = 0; i < deq.size(); i++)
