@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:38:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/24 00:29:53 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 15:41:39 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int ac, char **av) 
 {
-    std::vector<int> sequence;
+    std::vector<int> sequence; 
     if (ac <= 1)
 	{
         std::cout << "error" << std::endl;
@@ -42,7 +42,11 @@ int main(int ac, char **av)
     {
         std::cout << av[i] << " ";
     }
-    std::vector<int> sorted_sequence = merge_sort(sequence);
+    // !! this is merge sort
+    // std::vector<int> sorted_sequence = merge_sort(sequence);
+    // !! this is insertion sort
+    std::vector<int> sorted_sequence = insert_sort(sequence);
+    
     std::cout << std::endl <<"After: ";
     for (size_t i = 0; i < sorted_sequence.size(); i++)
     {
