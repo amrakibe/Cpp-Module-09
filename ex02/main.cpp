@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:38:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 16:46:51 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:56:56 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int main(int ac, char **av)
         std::cout << "error" << std::endl;
 		return (1);
     }
-    int i = 1;
     size_t j;
-    while (av[i])
+    for(size_t i = 1; av[i]; i++)
     {
-		j = 0;
-		for (; av[i][j]; j++)
+        j = 0;
+		for(;av[i][j]; j++)
 		{
 			if (!std::isdigit(av[i][j]))
 				return (std::cout << "error" << std::endl, 1);
@@ -34,8 +33,7 @@ int main(int ac, char **av)
             return (std::cout << "error" << std::endl, 1);
         if(j == 0)
             return (std::cout << "error: bad input is empty" << std::endl, 1);
-            sequence.push_back(std::atof(av[i]));
-        i++;
+        sequence.push_back(std::atof(av[i]));
     }
     std::cout << "Before: " ;
     for (size_t i = 1; av[i]; i++)
