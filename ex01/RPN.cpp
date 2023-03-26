@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 19:57:28 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 20:26:36 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ void ParseRpnPolishedNotation(std::string Reverse_Polish)
 				exit(1);
 			}
 			else
-			{
 				str += line;
-				std::cout <<"this is str: "<< str << std::endl;
-				puts("\nhhh");
-			}
 		}
 	}
 	checkVNumber(str);
@@ -60,7 +56,7 @@ void checkVNumber(std::string str)
 		else
 			lentNb++;
 	}
-	std::cout << "l op => " <<lentOp << " " << "l Nb => " << lentNb -1 << std::endl;
+	// std::cout << "l op => " <<lentOp << " " << "l Nb => " << lentNb -1 << std::endl;
 	if (lentOp != lentNb - 1)
 	{
 		std::cerr << "Error: The result is Invalid :(" << std::endl;

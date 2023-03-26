@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:38:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 19:57:58 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:26:54 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int main(int ac, char **av) 
 {
-    std::vector<int> sequence; 
+    clock_t cl;
+    std::vector<int> sequence;
+
+    std::deque<int> deq;
+
+    
     if (ac <= 1)
 	{
         std::cout << "error" << std::endl;
@@ -34,14 +39,34 @@ int main(int ac, char **av)
         if(j == 0)
             return (std::cout << "error: bad input is empty" << std::endl, 1);
         sequence.push_back(std::atof(av[i]));
+        deq.push_back(std::atof(av[i]));
     }
+
+
+
+    
     std::cout << "Before: " ;
     for (size_t i = 1; av[i]; i++)
     {
         std::cout << av[i] << " ";
     }
     // !! this is merge sort
+    cl = clock();
     std::vector<int> sorted_sequence = merge_sort(sequence);
+    cl = clock() - cl;
+    double vec_time = ((double)cl) / CLOCKS_PER_SEC;
+
+    // !! this is deque sort
+    cl = clock();
+    merge_sort(deq);
+    cl = clock() - cl;
+    double deq_time = ((double)cl) / CLOCKS_PER_SEC;
+    
+       
+
+
+     
+   
     // !! this is insertion sort
     // std::vector<int> sorted_sequence = insert_sort(sequence);
     // mergeInsertionSort(sorted_sequence);
@@ -50,6 +75,8 @@ int main(int ac, char **av)
     {
         std::cout << sorted_sequence[i] << " ";
     }
-    std::cout << std::endl;
+
+    std::cout << std::endl << "Time to process a range of "<< sequence.size() <<" elements with std::[vector] " << vec_time  << std::endl;
+    std::cout <<  "Time to process a range of "<< deq.size() <<" elements with std::[deque] " << deq_time  << std::endl;
     return 0;
 }

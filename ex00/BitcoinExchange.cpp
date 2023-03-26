@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 02:22:48 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 20:28:31 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,9 @@ void	BitcoinExchange::ParseBitcoin(char **av)
 		std::cerr << "Error : could not open file" << std::endl;
 }
 
-bool BitcoinExchange::bitcoinExchange(std::list<std::string> a)
+bool BitcoinExchange::bitcoinExchange(std::list<std::string> list)
 {
-	std::list<std::string>::iterator it = a.begin();
+	std::list<std::string>::iterator it = list.begin();
 	int y = (int)std::atof((*it).c_str());
 	int m = (int)std::atof((*++it).c_str());
 	int d = (int)std::atof((*++it).c_str());
