@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 20:33:08 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 01:27:41 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ class BitcoinExchange
 		BitcoinExchange(const BitcoinExchange &bit_obj);
 		BitcoinExchange&operator=(const BitcoinExchange &bit_obj);
 		void ParseBitcoin(char **av);
-		std::string trim(std::string t);
 		~BitcoinExchange();
 		std::list<std::string> ft_split(std::string length, char delimiter);
+		bool bitcoinExchange(std::list<std::string> a);
+		// bool bitcoinExchange(char *a);
 };
+std::string trim(std::string str);
 // void ParseDate(std::string date, int i);

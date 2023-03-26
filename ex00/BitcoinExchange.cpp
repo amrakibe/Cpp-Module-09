@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/25 22:29:11 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/26 01:58:50 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff1, ',');
 			std::getline(str, buff2, ',');
 			// !! insert  key (data) and value to map
-			// !! stod is a forbidden function : use atof
 			_data[buff1] = std::atof(buff2.c_str());
 		}
 	}
@@ -51,12 +50,51 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 	return (*this);
 }
 
-BitcoinExchange::~BitcoinExchange(){
+BitcoinExchange::~BitcoinExchange() {}
+
+bool test(int y, int m, int d)
+{
+	if (std::to_string(y).length() != 4 || std::to_string(m).length() != 2 || std::to_string(d).length() != 2)
+		return (false);
+	return (true);
+}
+
+bool checkDashInDate(std::string date)
+{
+	int count = 0;
+	for (size_t i = 0 ; i < date.size();i++)
+	{
+		if (date[i] == '-')
+			count++;
+		if (date[i] == '-' && date[i + 1] == '-')
+			return (std::cerr << "Error: not a valid date => " << date << std::endl,false);
+	}
+	return (count != 2 ?std::cerr << "Error: not a valid date => " << date << std::endl ,false : true);
+}
+
+bool checkIsValidValue(std::string sp)
+{
+	for (size_t i = 0; i < sp.size(); i++)
+	{
+		if (sp[i] == '.')
+			continue;
+		if (!isdigit(sp[i]))
+			return(std::cerr << "Error: not a valid date " << sp << std::endl ,false);
+	}
+	
+	if (sp.find(".") != sp.rfind("."))
+			return (std::cerr << "Error: not a valid number " << sp << std::endl,false);
+			
+	return (sp.back() == '.' ? std::cerr << "Error: not a valid date hhh" << std::endl ,false : true);
 }
 
 bool ParseDate(int y, int m, int d)
 {
+
 	bool leaps = false;
+
+	if (test(y, m, d))
+		return (std::cerr << "Error : date not valid " << std::endl, false);
 
 	if (y % 4 == 0)
 		leaps = true;
@@ -106,8 +144,6 @@ bool ParseDate(int y, int m, int d)
 
 void BitcoinExchange::ParseBitcoin(char **av)
 {
-	BitcoinExchange ex;
-
 	std::string name = av[1];
 	std::ifstream inp_file(name);
 	std::string out;
@@ -121,102 +157,73 @@ void BitcoinExchange::ParseBitcoin(char **av)
 				std::cerr << "Error: bad input => " << out << std::endl;
 				continue;
 			}
-			std::list<std::string> sp = ex.ft_split(out, '|');
+			std::list<std::string> sp = ft_split(out, '|');
+			this->sp = sp;
 
 			sp.front() = trim(sp.front());
 			sp.back() = trim(sp.back());
-			std::string str = sp.back();
+
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
 				continue;
 			}
-			double value = (double)std::atof(sp.back().c_str());
+			this->value = (double)std::atof(sp.back().c_str());
 			if (value < 0 || value > 1000)
 			{
 				std::cerr << (value > 1000 ? "Error: too large a number " : "Error: not a positive number") << std::endl;
 				continue;
 			}
-			if (str.find(".") != str.rfind("."))
-			{
-				std::cerr << "Error: not a valid number" << std::endl;
+			if(!checkDashInDate(sp.front()) || !checkIsValidValue(sp.back()))
 				continue;
-			}
-			bool isNumber = true;
-			for (size_t i = 0; i < sp.back().size(); i++)
-			{
-				if(sp.back()[i] == '.')
-					continue;
-				if (!isdigit(sp.back()[i]))
-					isNumber = false;
-			}
-			if (sp.front().size() > 10 || sp.front().size() < 10)
-			{
-				std::cerr << "Error not a valid date => " << sp.front() << std::endl;
-				continue;
-			}
-			if(sp.front()[4] != '-' || sp.front()[7] != '-')
-			{
-				std::cerr << "Error: not a valid date => " << sp.front() << std::endl;
-				continue;
-			}
-			for (size_t i = 0; i < sp.front().size(); i++)
-			{
-				if(i == 4 || i == 7)
-					continue;
-				if(!std::isdigit(sp.front()[i]))
-				{
-					isNumber = false;
-					continue;
-				}
-			}
-			if (!isNumber)
-			{
-				std::cerr << "Error: not a valid Number" << std::endl;
-				continue;
-			}
-			std::list<std::string> a = ex.ft_split(sp.front(), '-');
+			std::list<std::string> a = ft_split(sp.front(), '-');
+			
 			if (a.size() != 3)
 			{
-				std::cerr << "Error: not a valid date => " << a.front() <<std::endl;
+				std::cerr << "Error: not a valid date => " << a.front() << std::endl;
 				continue;
 			}
-			// !!
-			std::list<std::string>::iterator it = a.begin();
-			int y = (int)std::atof((*it).c_str());
-			int m = (int)std::atof((*++it).c_str());
-			int d = (int)std::atof((*++it).c_str());
-			if (!ParseDate(y, m, d))
-			{
+	
+			if(bitcoinExchange(a))
 				continue;
-			}
-			if (_data.find(sp.front()) != _data.end())
-			{
-				std::cout << sp.front() << " => " << sp.back() << " = " << _data[sp.front()] * value << std::endl;
-			}
-			else
-			{
-				std::map<std::string, double>::iterator it = _data.lower_bound(sp.front());
-				if (it == _data.begin())
-				{
-					continue;
-				}
-				it--;
-				std::cout << sp.front() << " => " << sp.back() << " = " << it->second * value << std::endl;
-			}
 		}
 	}
 	else
 		std::cerr << "Error : could not open file" << std::endl;
 }
 
-std::string BitcoinExchange::trim(std::string t)
+bool BitcoinExchange::bitcoinExchange(std::list<std::string> a)
+{
+	std::list<std::string>::iterator it = a.begin();
+	int y = (int)std::atof((*it).c_str());
+	int m = (int)std::atof((*++it).c_str());
+	int d = (int)std::atof((*++it).c_str());
+
+	
+	if (!ParseDate(y, m, d))
+		return (true);
+		
+	if (_data.find(sp.front()) != _data.end())
+		std::cout << sp.front() << " => " << sp.back() << " = " << _data[sp.back()] * value << std::endl;
+		
+	else
+	{
+		std::map<std::string, double>::iterator it = this->_data.lower_bound(sp.front());
+		if (it == _data.begin())
+			return true;
+		it--;
+		std::cout << sp.front() << " => " << sp.back() << " = " << it->second * this->value << std::endl;
+	}
+	return (false);
+}
+
+std::string trim(std::string str)
 {
 	std::string afterTrim;
 
-	size_t i = t.find_first_not_of(" \t");
+	size_t i = str.find_first_not_of(" \t");
 	if (i != std::string::npos)
-		afterTrim = t.substr(i);
+		afterTrim = str.substr(i);
 	i = afterTrim.find_last_not_of(" \t");
 	if (i != std::string::npos)
 		afterTrim = afterTrim.substr(0, i + 1);
@@ -232,5 +239,5 @@ std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimi
 	while (std::getline(input_file, sub_string, delimiter))
 		if (sub_string != "")
 			list.push_back(sub_string);
-	return list;
+	return (list);
 }
