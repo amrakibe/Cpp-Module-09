@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 20:26:36 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:08:48 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void checkVNumber(std::string str)
 		else
 			lentNb++;
 	}
-	// std::cout << "l op => " <<lentOp << " " << "l Nb => " << lentNb -1 << std::endl;
 	if (lentOp != lentNb - 1)
 	{
 		std::cerr << "Error: The result is Invalid :(" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 20:28:31 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:05:04 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff1, ',');
 			std::getline(str, buff2, ',');
 			// !! insert  key (data) and value to map
-			_data[buff1] = std::atof(buff2.c_str());
+			data[buff1] = std::atof(buff2.c_str());
 		}
 	}
 }
@@ -201,12 +201,12 @@ bool BitcoinExchange::bitcoinExchange(std::list<std::string> list)
 	if (!ParseDate(y, m, d))
 		return (true);
 
-	if (_data.find(sp.front()) != _data.end())
-		std::cout << sp.front() << " => " << sp.back() << " = " << _data[sp.back()] * value << std::endl;
+	if (data.find(sp.front()) != data.end())
+		std::cout << sp.front() << " => " << sp.back() << " = " << data[sp.back()] * value << std::endl;
 	else
 	{
-		std::map<std::string, double>::iterator it = this->_data.lower_bound(sp.front());
-		if (it == _data.begin())
+		std::map<std::string, double>::iterator it = this->data.lower_bound(sp.front());
+		if (it == data.begin())
 			return true;
 		it--;
 		std::cout << sp.front() << " => " << sp.back() << " = " << it->second * this->value << std::endl;
