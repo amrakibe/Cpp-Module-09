@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/27 14:05:04 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/28 13:08:47 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,11 @@ void	BitcoinExchange::ParseBitcoin(char **av)
 				continue;
 			}
 			std::list<std::string> sp = ft_split(out, '|');
-			this->sp = sp;
+
 
 			sp.front() = trim(sp.front());
 			sp.back() = trim(sp.back());
-
+			this->sp = sp;
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
