@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/27 14:04:40 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:02:10 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class BitcoinExchange
 		std::string date;
 		std::map<std::string, double> data;
 		std::list<std::string> sp;
+		std::list<std::string> sp_date;
 	public:
 		BitcoinExchange(std::string nameFile = "data.csv");
 		BitcoinExchange(const BitcoinExchange &bit_obj);

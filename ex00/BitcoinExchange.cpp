@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/28 13:08:47 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:12:48 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,15 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
 
 BitcoinExchange::~BitcoinExchange() {}
 
-bool checkValidDate(int y, int m, int d)
-{
-	if (std::to_string(y).length() != 4 || std::to_string(m).length() != 2 || std::to_string(d).length() != 2)
-		return (false);
-	return (true);
-}
+// bool checkValidDate(int y, int m, int d)
+// {
+// 	if (std::to_string(y).length() != 4 || std::to_string(m).length() > 2 || std::to_string(d).length() > 2)
+// 	{
+// 		std::cerr << "Error: date not valid " << std::endl;
+// 		return (false);
+// 	}
+// 	return (true);
+// }
 
 bool checkDashInDate(std::string date)
 {
@@ -84,16 +87,13 @@ bool checkIsValidValue(std::string sp)
 
 	if (sp.find(".") != sp.rfind("."))
 			return (std::cerr << "Error: not a valid number " << sp << std::endl,false);
-			
+
 	return (sp.back() == '.' ? std::cerr << "Error: not a valid date hhh" << std::endl ,false : true);
 }
 
 bool ParseDate(int y, int m, int d)
 {
 	bool leaps = false;
-
-	if (checkValidDate(y, m, d))
-		return (std::cerr << "Error : date not valid " << std::endl, false);
 
 	if (y % 4 == 0)
 		leaps = true;
@@ -108,7 +108,7 @@ bool ParseDate(int y, int m, int d)
 	case 12:
 		if (d > 31)
 		{
-			std::cerr << "Error: not a valid date " << std::endl;
+			std::cerr << "Error: not a valid date1" << std::endl;
 			return (false);
 		}
 		break;
@@ -118,7 +118,7 @@ bool ParseDate(int y, int m, int d)
 	case 11:
 		if (d > 30)
 		{
-			std::cerr << "Error not a valid date: " << std::endl;
+			std::cerr << "Error not a valid date2" << std::endl;
 			return (false);
 		}
 		break;
@@ -127,14 +127,14 @@ bool ParseDate(int y, int m, int d)
 		{
 			if (d > 28)
 			{
-				std::cerr << "Error: not a valid date" << std::endl;
+				std::cerr << "Error: not a valid date3" << std::endl;
 				return (false);
 			}
 		}
 		else
 		{
 			if (d > 29)
-				std::cerr << "Error: not a valid date" << std::endl;
+				std::cerr << "Error: not a valid date4" << std::endl;
 			return (false);
 		}
 	}
@@ -156,34 +156,40 @@ void	BitcoinExchange::ParseBitcoin(char **av)
 				std::cerr << "Error: bad input => " << out << std::endl;
 				continue;
 			}
-			std::list<std::string> sp = ft_split(out, '|');
-
-
+			sp = ft_split(out, '|');
 			sp.front() = trim(sp.front());
 			sp.back() = trim(sp.back());
-			this->sp = sp;
+
 			if (sp.size() != 2)
 			{
 				std::cerr << "Error: bad input => " << sp.front() << std::endl;
 				continue;
 			}
-			this->value = (double)std::atof(sp.back().c_str());
+
+			value = (double)std::atof(sp.back().c_str());
+
 			if (value < 0 || value > 1000)
 			{
 				std::cerr << (value > 1000 ? "Error: too large a number " : "Error: not a positive number") << std::endl;
 				continue;
 			}
+
 			if(!checkDashInDate(sp.front()) || !checkIsValidValue(sp.back()))
 				continue;
-	
-			std::list<std::string> a = ft_split(sp.front(), '-');
-			
-			if (a.size() != 3)
+			if(sp.front().size() != 10)
 			{
-				std::cerr << "Error: not a valid date => " << a.front() << std::endl;
+				std::cerr << "Error: date not valid " << std::endl;
 				continue;
 			}
-			if(bitcoinExchange(a))
+
+			sp_date = ft_split(sp.front(), '-');
+
+			if (sp_date.size() != 3)
+			{
+				std::cerr << "Error: not a valid date => " << sp.front() << std::endl;
+				continue;
+			}
+			if(bitcoinExchange(sp_date))
 				continue;
 		}
 	}
@@ -199,17 +205,17 @@ bool BitcoinExchange::bitcoinExchange(std::list<std::string> list)
 	int d = (int)std::atof((*++it).c_str());
 	
 	if (!ParseDate(y, m, d))
-		return (true);
+		return (std::cout << "error: \n" ,true);
 
 	if (data.find(sp.front()) != data.end())
-		std::cout << sp.front() << " => " << sp.back() << " = " << data[sp.back()] * value << std::endl;
+		std::cout << sp.front()  << " => " << sp.back() << " = " << data[sp.front()] * value << std::endl;
 	else
 	{
-		std::map<std::string, double>::iterator it = this->data.lower_bound(sp.front());
+		std::map<std::string, double>::iterator it = data.lower_bound(sp.front());
 		if (it == data.begin())
 			return true;
 		it--;
-		std::cout << sp.front() << " => " << sp.back() << " = " << it->second * this->value << std::endl;
+		std::cout << sp.front() << " => " << sp.back() << " = " << it->second * value << std::endl;
 	}
 	return (false);
 }
