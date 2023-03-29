@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/27 14:08:48 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:48:52 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void ParseRpnPolishedNotation(std::string Reverse_Polish)
 		{
 			if (std::atof(line.c_str()) < 0 || std::atof(line.c_str()) > 9)
 			{
-				if(std::atof(line.c_str()) < 0 ? std::cerr << "Error: not a positive number." << std::endl : \
-					std::cerr << "Error: too large a number" << std::endl)
+				if(std::atof(line.c_str()) < 0 ? std::cout << "Error: not a positive number." << std::endl : \
+					std::cout << "Error: too large a number" << std::endl)
 				exit(1);
 			}
 			else
@@ -50,7 +50,7 @@ void checkVNumber(std::string str)
 		}
 		if (!isdigit(str[i]))
 		{
-			std::cerr << "Error" << std::endl;
+			std::cout << "Error" << std::endl;
 			exit(1);
 		}
 		else
@@ -58,7 +58,7 @@ void checkVNumber(std::string str)
 	}
 	if (lentOp != lentNb - 1)
 	{
-		std::cerr << "Error: The result is Invalid :(" << std::endl;
+		std::cout << "Error: The result is Invalid :(" << std::endl;
 		exit(1);
 	}
 	RPNpolishedNotation(str);
@@ -79,13 +79,13 @@ void RPNpolishedNotation(std::string Reverse_Polish)
 		{
 			if (stack.size() == 0)
 			{
-				std::cerr << "Error: stack A is empty" << std::endl;
+				std::cout << "Error: stack A is empty" << std::endl;
 				exit(1);
 			}
 			b = stack.top(); stack.pop();
 			if (stack.size() == 0)
 			{
-				std::cerr << "Error: stack B is empty" << std::endl;
+				std::cout << "Error: stack B is empty" << std::endl;
 				exit(1);
 			}
 			a = stack.top(); stack.pop();
@@ -104,7 +104,7 @@ void RPNpolishedNotation(std::string Reverse_Polish)
 			case '/':
 				if (b == 0)
 				{
-					std::cerr << "Error: Division By Zero (:" << std::endl;
+					std::cout << "Error: Division By Zero (:" << std::endl;
 					exit(1);
 				}
 				stack.push(a / b);
