@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/29 20:48:05 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/30 02:42:00 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			std::getline(str, buff2, ',');
 			// !! insert  key  and value to map
 			data[buff1] = std::atof(buff2.c_str());
+			// std::cout << "value: " << buff2 << std::endl;
 		}
+			// std::cout << "date: " << data[] << std::endl;
 	}
 }
 
@@ -131,8 +133,10 @@ bool ParseDate(int y, int m, int d)
 		else
 		{
 			if (d > 29)
+			{
 				std::cout << "Error: not a valid date" << std::endl;
-			return (false);
+				return (false);
+			}
 		}
 	}
 	return (true);
@@ -143,6 +147,7 @@ void BitcoinExchange::ParseBitcoin(char **av)
 	std::string name = av[1];
 	std::ifstream inp_file(name);
 	std::string out;
+
 	if (inp_file.is_open())
 	{
 		if (inp_file.peek() == std::ifstream::traits_type::eof())
@@ -153,7 +158,7 @@ void BitcoinExchange::ParseBitcoin(char **av)
 		std::getline(inp_file, out);
 		if(strcmp("date | value", out.c_str()) != 0)
 		{
-			std::cout << "Error: file is not valid" << out << std::endl;
+			std::cout << "Error: file is not valid" << std::endl;
 			exit(1);
 		}
 		while (std::getline(inp_file, out))
@@ -211,7 +216,7 @@ bool BitcoinExchange::bitcoinExchange(std::list<std::string> list)
 		return (true);
 
 	if (data.find(sp.front()) != data.end())
-		std::cout << sp.front() << " => " << sp.back() << " = " << data[sp.front()] * value << std::endl;
+		std::cout << sp.front() << " => " << sp.back() << " = " << data[sp.front()] * value << std::endl;	
 	else
 	{
 		std::map<std::string, double>::iterator it = data.lower_bound(sp.front());

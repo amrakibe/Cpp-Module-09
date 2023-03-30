@@ -6,15 +6,17 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:42 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/26 13:39:19 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/30 01:53:53 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef RPN_HPP
+# define RPN_HPP
 #include <iostream>
-#include <stack>
 #include <sstream>
+#include <stack>
 
 void	RPNpolishedNotation(std::string Reverse_Polish);
 void	ParseRpnPolishedNotation(std::string Reverse_Polish);
 void	checkVNumber(std::string str);
+#endif

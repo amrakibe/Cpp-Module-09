@@ -6,11 +6,13 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/28 19:57:42 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:41:43 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
+
 #include <map>
 #include <list>
 #include <iostream>
@@ -29,9 +31,9 @@ class BitcoinExchange
 		BitcoinExchange(std::string nameFile = "data.csv");
 		BitcoinExchange(const BitcoinExchange &bit_obj);
 		BitcoinExchange&operator=(const BitcoinExchange &bit_obj);
-		void ParseBitcoin(char **av);
 		~BitcoinExchange();
 		std::list<std::string> ft_split(std::string length, char delimiter);
+		void ParseBitcoin(char **av);
 		bool bitcoinExchange(std::list<std::string> list);
 };
 
@@ -39,4 +41,4 @@ std::string	trim(std::string str);
 bool 		ParseDate(int y, int m, int d);
 bool 		checkIsValidValue(std::string sp);
 bool 		checkDashInDate(std::string date);
-bool 		checkValidDate(int y, int m, int d);
+#endif
