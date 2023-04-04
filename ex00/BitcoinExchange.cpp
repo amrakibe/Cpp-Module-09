@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 13:10:28 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/30 02:42:00 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:32:47 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 BitcoinExchange::BitcoinExchange(std::string nameFile)
 {
+	
 	std::ifstream inp_file(nameFile);
-	std::string out;
-	std::string buff2;
-	std::string buff1;
+	std::string out, buff2, buff1;
 
 	if (!inp_file.is_open())
 		std::cout << "Error : could not open file." << std::endl;
@@ -34,11 +33,8 @@ BitcoinExchange::BitcoinExchange(std::string nameFile)
 			}
 			std::getline(str, buff1, ',');
 			std::getline(str, buff2, ',');
-			// !! insert  key  and value to map
 			data[buff1] = std::atof(buff2.c_str());
-			// std::cout << "value: " << buff2 << std::endl;
 		}
-			// std::cout << "date: " << data[] << std::endl;
 	}
 }
 
@@ -93,7 +89,7 @@ bool checkIsValidValue(std::string sp)
 bool ParseDate(int y, int m, int d)
 {
 	bool leaps = false;
-
+	
 	if (y % 4 == 0)
 		leaps = true;
 	switch (m)
@@ -105,7 +101,7 @@ bool ParseDate(int y, int m, int d)
 	case 8:
 	case 10:
 	case 12:
-		if (d > 31)
+		if (d < 1 || d > 31)
 		{
 			std::cout << "Error: not a valid date" << std::endl;
 			return (false);
@@ -115,7 +111,7 @@ bool ParseDate(int y, int m, int d)
 	case 6:
 	case 9:
 	case 11:
-		if (d > 30)
+		if (d < 1 || d > 30)
 		{
 			std::cout << "Error not a valid date" << std::endl;
 			return (false);
@@ -124,7 +120,7 @@ bool ParseDate(int y, int m, int d)
 	case 2:
 		if (leaps)
 		{
-			if (d > 28)
+			if (d < 1 || d > 28)
 			{
 				std::cout << "Error: not a valid date" << std::endl;
 				return (false);
@@ -132,7 +128,7 @@ bool ParseDate(int y, int m, int d)
 		}
 		else
 		{
-			if (d > 29)
+			if (d < 1 || d > 29)
 			{
 				std::cout << "Error: not a valid date" << std::endl;
 				return (false);
@@ -150,15 +146,11 @@ void BitcoinExchange::ParseBitcoin(char **av)
 
 	if (inp_file.is_open())
 	{
-		if (inp_file.peek() == std::ifstream::traits_type::eof())
-		{
-			std::cout << "Error: file is empty" << std::endl;
-			exit(1);
-		}
 		std::getline(inp_file, out);
-		if(strcmp("date | value", out.c_str()) != 0)
+		if(out.empty() || strcmp("date | value", out.c_str()) != 0)
 		{
-			std::cout << "Error: file is not valid" << std::endl;
+			std::cout << (out.empty() ? "Error: this line is empty: " :\
+				"Error: file is not valid: ") << out << std::endl;
 			exit(1);
 		}
 		while (std::getline(inp_file, out))
@@ -184,9 +176,10 @@ void BitcoinExchange::ParseBitcoin(char **av)
 				continue;
 			}
 			value = (double)std::atof(sp.back().c_str());
-			if (value < 0 || value > 1000)
+			if (value <= 0 || value >= 1000)
 			{
-				std::cout << (value > 1000 ? "Error: too large a number " : "Error: not a positive number") << std::endl;
+				std::cout << (value >= 1000 ? "Error: too large a number " :\
+					"Error: not a positive number") << std::endl;
 				continue;
 			}
 			if (!checkIsValidValue(sp.back()))
@@ -221,7 +214,7 @@ bool BitcoinExchange::bitcoinExchange(std::list<std::string> list)
 	{
 		std::map<std::string, double>::iterator it = data.lower_bound(sp.front());
 		if (it == data.begin())
-			return true;
+			return (std::cout << "error: date not valid" << std::endl, false);
 		it--;
 		std::cout << sp.front() << " => " << sp.back() << " = " << it->second * value << std::endl;
 	}
@@ -234,19 +227,19 @@ std::string trim(std::string str)
 
 	size_t i = str.find_first_not_of(" \t");
 	if (i != std::string::npos)
-		afterTrim = str.substr(i);
+		afterTrim = str.substr(i);         
 	i = afterTrim.find_last_not_of(" \t");
 	if (i != std::string::npos)
 		afterTrim = afterTrim.substr(0, i + 1);
 	return (afterTrim);
 }
 
-std::list<std::string> BitcoinExchange::ft_split(std::string length, char delimiter)
+std::list<std::string> BitcoinExchange::ft_split(std::string str, char delimiter)
 {
 	std::list<std::string> list;
 
 	std::string sub_string;
-	std::stringstream input_file(length);
+	std::stringstream input_file(str);
 	while (std::getline(input_file, sub_string, delimiter))
 		if (sub_string != "")
 			list.push_back(sub_string);

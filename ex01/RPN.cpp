@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 17:00:39 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/30 01:54:27 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/30 20:50:01 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void checkVNumber(std::string str)
 	}
 	if (lentOp != lentNb - 1)
 	{
-		std::cout << "Error: The result is Invalid :(" << std::endl;
+		std::cout << "Error: The result is Invalid (:" << std::endl;
 		exit(1);
 	}
 	RPNpolishedNotation(str);
@@ -79,13 +79,13 @@ void RPNpolishedNotation(std::string Reverse_Polish)
 		{
 			if (stack.size() == 0)
 			{
-				std::cout << "Error: stack A is empty" << std::endl;
+				std::cout << "Error: stack A is empty (:" << std::endl;
 				exit(1);
 			}
 			b = stack.top(); stack.pop();
 			if (stack.size() == 0)
 			{
-				std::cout << "Error: stack B is empty" << std::endl;
+				std::cout << "Error: stack B is empty (:" << std::endl;
 				exit(1);
 			}
 			a = stack.top(); stack.pop();

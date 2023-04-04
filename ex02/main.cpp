@@ -6,7 +6,7 @@
 /*   By: amrakibe <amrakibe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:38:31 by amrakibe          #+#    #+#             */
-/*   Updated: 2023/03/27 18:27:07 by amrakibe         ###   ########.fr       */
+/*   Updated: 2023/03/31 22:38:33 by amrakibe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,18 @@ int main(int ac, char **av)
         std::cout << av[i] << " ";
     }
     
-    // !! this is the time for vector
     cl = clock();
     std::vector<int> sorted_sequence = merge_sort(sequence);
     cl = clock() - cl;
-    double vec_time = ((double)cl) / CLOCKS_PER_SEC * 1000000;
+    double vec_time = ((double)cl) / CLOCKS_PER_SEC * 1000;
 
-    // !! this is the time for deque
     cl = clock();
     merge_sort(deq);
     cl = clock() - cl;
-    double deq_time = ((double)cl) / CLOCKS_PER_SEC * 1000000;
+    double deq_time = ((double)cl) / CLOCKS_PER_SEC * 1000;
 
     std::cout << std::endl <<"After: ";
-    
+
     for (size_t i = 0; i < sorted_sequence.size(); i++)
     {
         std::cout << sorted_sequence[i] << " ";
